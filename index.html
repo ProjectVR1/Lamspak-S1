@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Aplikasi muhasabbah/evaluasi diri IAPS 2.0 LAMSPAK Sarjana: 73 indikator, 43 tabel, narasi, rekomendasi dan rencana tindak lanjut.">
+<meta name="theme-color" content="#0f4c5c">
+<title>Muhasabbah FED LAMSPAK Sarjana - IAPS 2.0</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<noscript><div class="noscript">JavaScript diperlukan agar aplikasi dapat menghitung, menyimpan, dan mengekspor laporan.</div></noscript>
+<header class="topbar">
+  <div class="brand"><div class="brandmark">S1</div><div><strong>MUHASABBAH FED LAMSPAK</strong><span>IAPS 2.0 Sarjana • evaluasi terukur dan terdokumentasi</span></div></div>
+  <div class="top-actions">
+    <button class="btn primary" id="btnAnalyze">Analisis FED</button>
+    <button class="btn" id="btnPdf">Ekspor PDF</button>
+    <button class="btn" id="btnWord">Ekspor Word (.docx)</button>
+    <button class="btn" id="btnBackup">Backup JSON</button>
+    <button class="btn" id="btnRestore">Impor JSON</button>
+  </div>
+</header>
+<main>
+<section class="hero wrap" id="top">
+  <div>
+    <p class="eyebrow">Akreditasi Program Studi 2.0 - Program Sarjana</p>
+    <h1>Penilaian mandiri yang terukur, bernarasi, dan dapat ditindaklanjuti.</h1>
+    <p class="lead">Rubrik 73 indikator, bobot resmi pada matriks, 43 tabel data kinerja, register bukti, narasi hasil per butir, dan rencana perbaikan disatukan dalam satu aplikasi statis yang siap GitHub Pages.</p>
+    <div class="badges"><span>11 standar</span><span>73 indikator</span><span>43 tabel</span><span>Bobot 141</span><span>Maks. berbobot 282</span><span>Client-side</span></div>
+  </div>
+  <aside class="score-card"><div class="ring" id="scoreRing" style="--pct:0"><div><b id="heroScore">0.00</b><small>Indeks kesiapan / 100</small></div></div><strong id="heroStatus">Belum dinilai</strong><p id="heroNote">Lengkapi penilaian dan bukti.</p></aside>
+</section>
+<section class="method-alert wrap"><b>Pemisahan metodologis.</b> Skor rubrik 0-2, <i>syarat perlu Unggul</i>, mutu bukti, dan indeks kesiapan internal dihitung sebagai konsep yang berbeda. Aplikasi tidak menyatakan keputusan akreditasi resmi.</section>
+<section class="app wrap">
+<aside class="sidebar">
+  <button data-view="dashboard" class="active">Dashboard</button>
+  <button data-view="assessment">73 Indikator</button>
+  <button data-view="plans">Rencana Perbaikan</button>
+  <button data-view="tables">43 Tabel FED</button>
+  <button data-view="evidence">Register Bukti</button>
+  <button data-view="analysis">Analisis Otomatis FED</button>
+  <button data-view="identity">Identitas & Tim</button>
+  <button data-view="method">Metodologi</button>
+  <button data-view="report">Laporan</button>
+  <hr>
+  <div class="save" id="saveStatus">Tersimpan lokal</div>
+  <button class="btn danger full" id="btnReset">Reset Data</button>
+</aside>
+<div class="content">
+  <section class="view active" id="view-dashboard"><div id="dashboard"></div></section>
+  <section class="view" id="view-assessment">
+    <div class="panel"><div class="panel-head"><div><p class="kicker">Matriks resmi</p><h2>Penilaian 73 Indikator</h2><p class="muted">Skor manual adalah keputusan evaluator internal. Kalkulator dan analisis FED hanya memberi saran yang dapat diterapkan setelah ditelaah.</p></div><span class="tag" id="assessmentCount">0/73 dinilai</span></div>
+    <div class="filters"><input id="critSearch" placeholder="Cari nomor, indikator, standar..."><select id="critFilter"><option value="all">Semua</option><option value="unset">Belum dinilai</option><option value="gap">Belum skor 2</option><option value="unggul">Syarat perlu Unggul</option><option value="critical">Prioritas kritis/tinggi</option><option value="0">Skor 0</option><option value="1">Skor 1</option><option value="2">Skor 2</option></select></div></div>
+    <div id="assessmentList"></div>
+  </section>
+  <section class="view" id="view-plans"><div class="panel"><div class="panel-head"><div><p class="kicker">PDCA / PPEPP</p><h2>Rencana Perbaikan Terukur</h2><p class="muted">Prioritas diturunkan dari status syarat, gap skor, bobot, dan mutu bukti. PIC, target waktu, indikator keberhasilan, dan progres tetap ditetapkan oleh tim.</p></div></div><div id="planList"></div></div></section>
+  <section class="view" id="view-tables"><div class="panel"><div class="panel-head"><div><p class="kicker">Alat bantu data kinerja</p><h2>43 Tabel FED</h2><p class="muted">Struktur dan formula diambil dari alat bantu penghitungan pada file acuan. Sel input berwarna kuning; sel formula dihitung di browser.</p></div><span class="tag" id="tableProgress">0% terisi</span></div><div class="table-tools"><select id="tableSelect"></select><button class="btn" id="prevTable">←</button><button class="btn" id="nextTable">→</button><button class="btn" id="exportCsv">CSV</button></div></div><div id="tableViewer"></div><div class="panel"><h3>Indeks Tabel</h3><div id="tableIndex" class="table-index"></div></div></section>
+  <section class="view" id="view-evidence"><div class="panel"><div class="panel-head"><div><p class="kicker">Traceability</p><h2>Register Bukti Sahih</h2><p class="muted">Status bukti tidak mengubah skor rubrik; ia digunakan untuk mengukur kesiapan verifikasi dan risiko audit.</p></div></div><div id="evidenceList"></div></div></section>
+  <section class="view" id="view-analysis"><div class="panel"><div class="panel-head"><div><p class="kicker">Screening konservatif</p><h2>Analisis Otomatis Dokumen FED</h2><p class="muted" id="analysisMeta">Belum ada dokumen dianalisis.</p></div><button class="btn primary" id="uploadFed">Pilih File FED</button></div><div class="drop" id="dropZone"><b>Tarik DOCX/PDF berbasis teks/TXT/HTML/MD ke sini</b><p>Dokumen diproses di browser. Saran otomatis tidak langsung mengganti skor evaluator.</p><div class="progress"><span id="analysisBar"></span></div><small id="analysisProgress">Siap.</small></div></div><div class="panel"><div class="panel-head"><div><h3>Hasil Screening</h3><p class="muted">Hanya kecocokan dengan bukti tekstual yang cukup relevan yang diberi saran skor; ketidakadaan teks tidak otomatis dianggap skor 0.</p></div><button class="btn" id="applyHighConfidence">Terapkan saran confidence tinggi ke butir kosong</button></div><div id="analysisResults"></div></div></section>
+  <section class="view" id="view-identity"><div class="panel"><div class="panel-head"><div><p class="kicker">Metadata laporan</p><h2>Identitas Program Studi</h2></div></div><div id="identityFields" class="grid3"></div></div><div class="panel"><h3>Tim Evaluasi Diri</h3><div id="teamFields" class="grid2"></div></div><div class="panel"><div class="grid2"><label class="field">Ringkasan Eksekutif<textarea data-front="ringkasan"></textarea></label><label class="field">Catatan Metodologis Lokal<textarea data-front="catatanMetode"></textarea></label></div></div></section>
+  <section class="view" id="view-method"><div id="methodology"></div></section>
+  <section class="view" id="view-report"><div class="report-actions panel"><div><h2>Laporan Evaluasi Diri Internal</h2><p class="muted">Tampilan ini juga digunakan untuk cetak/Save as PDF.</p></div><button class="btn primary" id="btnPrint">Cetak / Save as PDF</button></div><div id="reportContent"></div></section>
+</div>
+</section>
+</main>
+<footer><div class="wrap"><b>Muhasabbah FED LAMSPAK Sarjana</b><span> • versi 3.0 • sumber instrumen disediakan pengguna</span></div></footer>
+<input type="file" id="restoreInput" accept="application/json" hidden>
+<input type="file" id="fedInput" accept=".docx,.pdf,.txt,.html,.htm,.md,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,text/plain,text/html" hidden>
+<div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.12.2/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist-min@3.2.146/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@5.0.8/dist/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@9.7.2/dist/index.iife.min.js"></script>
+<script src="lamspak-data.js"></script>
+<script src="app.js"></script>
+<script src="analysis.js"></script>
+</body></html>
